@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
+
 const MovieSchema = new Schema({
   adult: { type: Boolean },
   id: { type: Number, required: true, unique: true },
