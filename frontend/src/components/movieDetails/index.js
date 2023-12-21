@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
 import { useQueries } from "react-query";
-import { getMovie, getMovieCredits } from "../../api/tmdb-api";
+import { getMovie, getMovieCredits } from "../../api/movies-api";
 import Spinner from '../spinner';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';

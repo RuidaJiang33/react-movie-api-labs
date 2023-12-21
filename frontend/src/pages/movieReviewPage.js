@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import PageTemplate from "../components/templateMoviePage";
 import MovieReview from "../components/movieReview";
 import { useQuery } from "react-query";
-import { getMovie } from "../api/tmdb-api";
+import { getMovie } from "../api/movies-api";
 import Spinner from '../components/spinner'
 
 const MovieReviewPage = (props) => {

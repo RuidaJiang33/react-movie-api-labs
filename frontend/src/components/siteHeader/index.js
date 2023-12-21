@@ -1,40 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
-import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useAuth } from '../../contexts/authContext';
-import { useLocation } from "react-router-dom";
+import { AuthContext } from "../../contexts/authContext";
+//import { useLocation } from "react-router-dom";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = () => {
+  const context = useContext(AuthContext);
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
-  const { logout } = useAuth();
-  const location = useLocation();
-
+  //const location = useLocation();
 
   const open = Boolean(anchorEl);
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  // const hideSiteHeader = location.pathname === '/' || location.pathname === '/signup';
 
-  const navigate = useNavigate();
-
-  const hideSiteHeader = location.pathname === '/' || location.pathname === '/signup';
-
-  if (hideSiteHeader) {
-    return <></>;
-  }
+  // if (hideSiteHeader) {
+  //   return <></>;
+  // }
 
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true });
@@ -51,7 +42,7 @@ const SiteHeader = () => {
   };
 
   const handleLogOut = () => {
-    logout();
+
     navigate('/');
   }
 
@@ -76,39 +67,10 @@ const SiteHeader = () => {
     { label: "User", id: "user_button", options: userOptions },
   ];
 
-  const renderButtons = () => {
-    return menuItems.map((item) => (
-      <Button
-        id={item.id}
-        aria-controls={activeButton === item.id ? 'menu-' + item.id : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        key={item.label}
-        color="inherit"
-        onClick={(event) => handleMenuOpen(event, item.id, item.options)}
-      >
-        {item.label}
-      </Button>
-    ));
-  };
 
-  const renderMobileMenu = () => {
-    return (
-      <IconButton
-        aria-label="menu"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
-        onClick={handleMenuOpen}
-        color="inherit"
-      >
-        <MenuIcon />
-      </IconButton>
-    );
-  };
-
-  return (
+  return context.isAuthenticated ? (
     <>
-      <AppBar position="fixed" style={{backgroundColor:'#0D253F'}}>
+      <AppBar position="fixed" style={{ backgroundColor: '#0D253F' }}>
         <Toolbar>
           <Typography variant="h4" sx={{ flexGrow: 1 }}>
             TMDB Client
@@ -116,8 +78,21 @@ const SiteHeader = () => {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             All you ever wanted to know about Movies!
           </Typography>
-          
-          {isMobile ? renderMobileMenu() : renderButtons()}
+
+          {menuItems.map((item) => (
+            <Button
+              id={item.id}
+              aria-controls={activeButton === item.id ? 'menu-' + item.id : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              key={item.label}
+              color="inherit"
+              onClick={(event) => handleMenuOpen(event, item.id, item.options)}
+            >
+              {item.label}
+            </Button>
+          ))}
+
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -139,6 +114,11 @@ const SiteHeader = () => {
       </AppBar>
       <Offset />
     </>
+  ) : (
+    <p>
+      You are not logged in{" "}
+      <button onClick={() => navigate('/login')}>Login</button>
+    </p>
   );
 };
 
