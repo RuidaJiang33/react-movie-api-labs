@@ -9,11 +9,15 @@ const options = {
     info: {
       title: "api",
       version: "1.0.0",
-      description: `小程序+管理后台共用接口api`,
+      description: `backend api`,
     },
   },
   // 去哪个路由下收集 swagger 注释
-  apis: [path.join(__dirname, "../../routes/*.js")],
+  apis: [
+    path.join(__dirname, "../api/movies/index.js"),
+    path.join(__dirname, "../api/people/index.js"), 
+    path.join(__dirname, "../api/users/index.js"), 
+  ],
 };
 
 var swaggerJson = function (req, res) {

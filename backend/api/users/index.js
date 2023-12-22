@@ -32,6 +32,20 @@ async function authenticateUser(req, res) {
 }
 
 // Get all users
+/**,
+ * @swagger
+ * /api/users:
+ *    get:
+ *      tags:
+ *       - users
+ *      summary: 
+ *      operationId: 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: 
+ * */
 router.get('/', async (req, res) => {
     const users = await User.find();
     res.status(200).json(users);
@@ -41,6 +55,20 @@ router.get('/', async (req, res) => {
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 // register(Create)/Authenticate User
+/**,
+ * @swagger
+ * /api/users:
+ *    post:
+ *      tags:
+ *       - users
+ *      summary: register
+ *      operationId: 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: 
+ * */
 router.post('/', asyncHandler(async (req, res) => {
   try {
       if (!req.body.username || !req.body.password) {
@@ -59,6 +87,21 @@ router.post('/', asyncHandler(async (req, res) => {
 }));
 
 // Update a user
+// register(Create)/Authenticate User
+/**,
+ * @swagger
+ * /api/users/:id:
+ *    put:
+ *      tags:
+ *       - users
+ *      summary: Update a user
+ *      operationId: 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: 
+ * */
 router.put('/:id', async (req, res) => {
   if (req.body._id) delete req.body._id;
   const result = await User.updateOne({
@@ -71,6 +114,20 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+/**,
+ * @swagger
+ * /api/users/:username/movies:
+ *    get:
+ *      tags:
+ *       - users
+ *      summary: 
+ *      operationId: 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: Gets a list of favourite movieId
+ * */
 router.get('/:username/movies', async (req, res) => {
     const username = req.params.username;
 
@@ -82,6 +139,20 @@ router.get('/:username/movies', async (req, res) => {
     }
 });
 
+/**,
+ * @swagger
+ * /api/users/:username/mustWatch:
+ *    get:
+ *      tags:
+ *       - users
+ *      summary: 
+ *      operationId: 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: Gets a list of mustWatch movieId
+ * */
 router.get('/:username/mustWatch', async (req, res) => {
     const username = req.params.username;
 
@@ -93,6 +164,20 @@ router.get('/:username/mustWatch', async (req, res) => {
     }
 });
 
+/**,
+ * @swagger
+ * /api/users/movies:
+ *    post:
+ *      tags:
+ *       - users
+ *      summary: 
+ *      operationId: 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: post favourite movieId
+ * */
 router.post('/movies', asyncHandler(async (req, res) => {
     const userName = req.body.username;
     const movieId = req.body.movieId;
@@ -109,6 +194,20 @@ router.post('/movies', asyncHandler(async (req, res) => {
     }
   }));
 
+  /**,
+ * @swagger
+ * /api/users/mustWatch:
+ *    post:
+ *      tags:
+ *       - users
+ *      summary: 
+ *      operationId: 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: post mustWatch movieId
+ * */
   router.post('/mustWatch', asyncHandler(async (req, res) => {
     const userName = req.body.username;
     const movieId = req.body.movieId;
@@ -125,6 +224,20 @@ router.post('/movies', asyncHandler(async (req, res) => {
     }
   }));
 
+  /**,
+ * @swagger
+ * /api/users/movies:
+ *    delete:
+ *      tags:
+ *       - users
+ *      summary: 
+ *      operationId: 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: delete favourite movieId
+ * */
   router.delete('/movies', async (req, res) => {
     const userName = req.body.username;
     const movieId = req.body.movieId;
@@ -141,6 +254,20 @@ router.post('/movies', asyncHandler(async (req, res) => {
     }
 });
 
+  /**,
+ * @swagger
+ * /api/users/mustWatch:
+ *    delete:
+ *      tags:
+ *       - users
+ *      summary: 
+ *      operationId: 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: delete mustWatch movieId
+ * */
 router.delete('/mustWatch', async (req, res) => {
     const userName = req.body.username;
     const movieId = req.body.movieId;

@@ -11,7 +11,7 @@ import authenticate from './authenticate';
 dotenv.config();
 
 const app = express();
-var swaggerInstall = require("../frontend/src/utils/swaggers");
+var swaggerInstall = require("./swaggers/index");
 swaggerInstall(app);
 const port = process.env.PORT;
 

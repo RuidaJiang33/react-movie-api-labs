@@ -10,6 +10,19 @@ import {
 
 const router = express.Router();
 
+/**,
+ * @swagger
+ * /api/people:
+ *    get:
+ *      tags:
+ *       - people
+ *      summary: 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: 
+ * */
 router.get('/', asyncHandler(async (req, res) => {
   let { page = 1, limit = 20 } = req.query; // destructure page and limit and set default values
   [page, limit] = [+page, +limit]; // trick to convert to numeric (req.query will contain string values)
@@ -31,24 +44,80 @@ router.get('/', asyncHandler(async (req, res) => {
   res.status(200).json(returnObject);
 }));
 
+/**,
+ * @swagger
+ * /api/people/tmdb/peopleList/:page:
+ *    get:
+ *      tags:
+ *       - people
+ *      summary: getPeopleList
+ *      operationId: getPeopleList 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: 
+ * */
 router.get('/tmdb/peopleList/:page', asyncHandler(async (req, res) => {
   const page = parseInt(req.params.page);
   const peopleList = await getPeopleList(page);
   res.status(200).json(peopleList);
 }));
 
+/**,
+ * @swagger
+ * /api/people/tmdb/:id:
+ *    get:
+ *      tags:
+ *       - people
+ *      summary: getPeople
+ *      operationId: getPeople 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: 
+ * */
 router.get('/tmdb/:id', asyncHandler(async (req, res) => {
   const id = parseInt(req.params.id);
   const peopleDetail = await getPeople(id);
   res.status(200).json(peopleDetail);
 }));
 
+/**,
+ * @swagger
+ * /api/people/tmdb/:id/peopleMovieCredits:
+ *    get:
+ *      tags:
+ *       - people
+ *      summary: getPeopleMovieCredits
+ *      operationId: getPeopleMovieCredits 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: 
+ * */
 router.get('/tmdb/:id/peopleMovieCredits', asyncHandler(async (req, res) => {
   const id = parseInt(req.params.id);
   const peopleMovieCredits = await getPeopleMovieCredits(id);
   res.status(200).json(peopleMovieCredits);
 }));
 
+/**,
+ * @swagger
+ * /api/people/tmdb/:id/peopleImages:
+ *    get:
+ *      tags:
+ *       - people
+ *      summary: getPeopleImages
+ *      operationId: getPeopleImages 
+ *      produces:
+ *      - application/json
+ *      responses:
+ *        200:
+ *          description: 
+ * */
 router.get('/tmdb/:id/peopleImages', asyncHandler(async (req, res) => {
   const id = parseInt(req.params.id);
   const peopleImages = await getPeopleImages(id);
