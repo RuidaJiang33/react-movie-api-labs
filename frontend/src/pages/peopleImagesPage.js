@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
 import PeopleImages from "../components/PeopleImages/";
-import { getPeople, getPeopleImages } from '../api/tmdb-api'
+import { getPeople, getPeopleImages } from '../api/people-api';
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
 import PeopleDetailHeader from "../components/headerPeopleDetail";

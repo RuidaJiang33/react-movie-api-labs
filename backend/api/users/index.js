@@ -1,14 +1,19 @@
 import express from 'express';
 import User from './userModel';
+import Movie from '../movies/movieModel';
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 
 const router = express.Router(); // eslint-disable-line
 
 async function registerUser(req, res) {
-  // Add input validation logic here
-  await User.create(req.body);
-  res.status(201).json({ success: true, msg: 'User successfully created.' });
+    const user = await User.findByUserName(req.body.username);
+    if (!user) {
+        await User.create(req.body);
+        res.status(201).json({success: true, msg: 'User successfully created.'});
+    } else {
+        res.status(401).json({success: false, msg: 'User existed!'});
+    }
 }
 
 async function authenticateUser(req, res) {
@@ -66,6 +71,90 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.get('/:username/movies', async (req, res) => {
+    const username = req.params.username;
 
+    try {
+        const user = await User.findOne({username}).select('favouriteMovies');
+        res.status(200).json(user.favouriteMovies);
+    } catch (error) {
+        res.status(500).json({message: 'Error retrieving favourite movies'});
+    }
+});
+
+router.get('/:username/mustWatch', async (req, res) => {
+    const username = req.params.username;
+
+    try {
+        const user = await User.findOne({username}).select('mustWatchMovies');
+        res.status(200).json(user.mustWatchMovies);
+    } catch (error) {
+        res.status(500).json({message: 'Error retrieving mustWatch movies'});
+    }
+});
+
+router.post('/movies', asyncHandler(async (req, res) => {
+    const userName = req.body.username;
+    const movieId = req.body.movieId;
+
+    try {
+        await User.findOneAndUpdate(
+            {username: userName}, 
+            {$addToSet: {favouriteMovies: movieId}}, 
+            {new: true}
+        );
+        res.status(200).json({message: 'Favourite movie added successfully'});
+    } catch (error) {
+        res.status(500).json({message: 'Error adding favourite movie'});
+    }
+  }));
+
+  router.post('/mustWatch', asyncHandler(async (req, res) => {
+    const userName = req.body.username;
+    const movieId = req.body.movieId;
+
+    try {
+        await User.findOneAndUpdate(
+            {username: userName}, 
+            {$addToSet: {mustWatchMovies: movieId}}, 
+            {new: true}
+        );
+        res.status(200).json({message: 'MustWatch movie added successfully'});
+    } catch (error) {
+        res.status(500).json({message: 'Error adding mustWatch movie'});
+    }
+  }));
+
+  router.delete('/movies', async (req, res) => {
+    const userName = req.body.username;
+    const movieId = req.body.movieId;
+
+    try {
+        await User.findOneAndUpdate(
+            {username: userName},
+            {$pull: {favouriteMovies: movieId}},
+            {new: true}
+        );
+        res.status(200).json({message: 'Favourite movie removed successfully'});
+    } catch (error) {
+        res.status(500).json({message: 'Error removing favourite movie'});
+    }
+});
+
+router.delete('/mustWatch', async (req, res) => {
+    const userName = req.body.username;
+    const movieId = req.body.movieId;
+
+    try {
+        await User.findOneAndUpdate(
+            {username: userName},
+            {$pull: {mustWatchMovies: movieId}},
+            {new: true}
+        );
+        res.status(200).json({message: 'MustWatch movie removed successfully'});
+    } catch (error) {
+        res.status(500).json({message: 'Error removing mustWatch movie'});
+    }
+});
 
 export default router;

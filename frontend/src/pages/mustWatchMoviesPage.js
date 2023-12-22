@@ -9,6 +9,7 @@ import RemoveFromMustWatches from '../components/cardIcons/removeFromMustWatches
 const MustWatchMoviesPage = () => {
   const {mustWatches: movieIds } = useContext(MoviesContext);
 
+  console.log(movieIds)
   // Create an array of queries and run in parallel.
   const mustWatchMovieQueries = useQueries(
     movieIds.map((movieId) => {

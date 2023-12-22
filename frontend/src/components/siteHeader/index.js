@@ -8,7 +8,6 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { AuthContext } from "../../contexts/authContext";
-//import { useLocation } from "react-router-dom";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -17,15 +16,8 @@ const SiteHeader = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
-  //const location = useLocation();
 
   const open = Boolean(anchorEl);
-
-  // const hideSiteHeader = location.pathname === '/' || location.pathname === '/signup';
-
-  // if (hideSiteHeader) {
-  //   return <></>;
-  // }
 
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true });
@@ -66,7 +58,6 @@ const SiteHeader = () => {
     { label: "People", id: "people_button", options: peopleOptions },
     { label: "User", id: "user_button", options: userOptions },
   ];
-
 
   return context.isAuthenticated ? (
     <>
@@ -115,10 +106,7 @@ const SiteHeader = () => {
       <Offset />
     </>
   ) : (
-    <p>
-      You are not logged in{" "}
-      <button onClick={() => navigate('/login')}>Login</button>
-    </p>
+   <></>
   );
 };
 

@@ -21,7 +21,9 @@ const AuthContextProvider = (props) => {
       setToken(result.token)
       setIsAuthenticated(true);
       setUserName(username);
+      return {success: true, status: result.status, message: "Login Successfully!"}
     }
+    return {success: false, status: result.status, message: result.message};
   };
 
   const register = async (username, password) => {

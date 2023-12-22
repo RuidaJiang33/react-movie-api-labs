@@ -9,7 +9,7 @@ import Spinner from '../components/spinner'
 const MovieReviewPage = (props) => {
   const location = useLocation();
   const { movie, review } = location.state;
-  
+
   const { data: movieData, error, isLoading, isError } = useQuery(
     ["movie", { id: movie.id }],
     getMovie

@@ -93,6 +93,68 @@ export const getMovieReviews = async (id) => {
   return response.json();
 };
 
+export const getFavouriteMovies = async (username) => {
+  const response = await fetch(
+      `http://localhost:8080/api/users/${username}/movies`
+  )
+  return response.json();
+}
+export const getMustWatchMovies = async (username) => {
+  const response = await fetch(
+      `http://localhost:8080/api/users/${username}/mustWatch`
+  )
+  return response.json();
+}
+
+export const addFavouriteMovies = async (username, movie) => {
+  const response = await fetch(`http://localhost:8080/api/users/movies`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          username: username,
+          movieId: movie.id
+      }),
+  });
+  return response.json();
+}
+
+export const addMustWatchMovies = async (username, movie) => {
+  const response = await fetch(`http://localhost:8080/api/users/mustWatch`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          username: username,
+          movieId: movie.id
+      }),
+  });
+  return response.json();
+}
+
+export const removeFavouriteMovies = async (username, movie) => {
+  const response = await fetch(`http://localhost:8080/api/users/movies`, {
+      method: 'DELETE',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({username: username, movieId: movie.id}),
+  });
+  return response.json();
+}
+
+export const removeMustWatchMovies = async (username, movie) => {
+  const response = await fetch(`http://localhost:8080/api/users/mustWatch`, {
+      method: 'DELETE',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({username: username, movieId: movie.id}),
+  });
+  return response.json();
+}
 
 export const login = async (username, password) => {
   const response = await fetch('http://localhost:8080/api/users', {

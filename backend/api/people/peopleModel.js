@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const PeopleSchema = new Schema({
   adult: { type: Boolean },
   gender: { type: Number },
-  id: { type: Number, required: true, unique: true },
+  id: { type: Number,  unique: true },
   known_for_department: { type: String },
   name: { type: String },
   original_name: { type: String },

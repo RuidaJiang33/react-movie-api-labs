@@ -1,6 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from '../contexts/authContext';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import { Button, Card, Typography } from '@mui/material';
 
 const SignUpPage = props => {
   const context = useContext(AuthContext)
@@ -25,19 +28,37 @@ const SignUpPage = props => {
 
   return (
     <>
-      <h2>SignUp page</h2>
-      <p>You must register a username and password to log in </p>
-      <input value={userName} placeholder="user name" onChange={e => {
-        setUserName(e.target.value);
-      }}></input><br />
-      <input value={password} type="password" placeholder="password" onChange={e => {
-        setPassword(e.target.value);
-      }}></input><br />
-      <input value={passwordAgain} type="password" placeholder="password again" onChange={e => {
-        setPasswordAgain(e.target.value);
-      }}></input><br />
-      {/* Login web form  */}
-      <button onClick={register}>Register</button>
+      <Card>
+        <Box
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh',
+            textAlign: 'left'
+          }}
+        >
+          <h2>SignUp page</h2>
+          <p>You must register a username and password to log in </p>
+          <Typography style={{ textAlign: 'left' }}>Email</Typography>
+          <TextField id="Email1" variant="outlined" onChange={e => {
+            setUserName(e.target.value);
+          }} sx={{ paddingBottom: 1.5 }} />
+          <Typography>Password</Typography>
+          <TextField id="Password" variant="outlined" type="password" onChange={e => {
+            setPassword(e.target.value);
+          }} sx={{ paddingBottom: 2 }} />
+          <Typography>Password Again</Typography>
+          <TextField id="PasswordAgain" variant="outlined" type="password" onChange={e => {
+            setPasswordAgain(e.target.value);
+          }} sx={{ paddingBottom: 2 }} />
+          <Button variant="contained" type="submit" onClick={register}>Register</Button>
+          <div>
+            Already have an account? <Link to="/">Log in</Link>
+          </div>
+        </Box>
+      </Card >
     </>
   );
 };

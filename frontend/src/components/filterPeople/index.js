@@ -1,4 +1,4 @@
-import { getPeopleList } from "../../api/tmdb-api";
+import { getPeopleList } from "../../api/people-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
 import SearchIcon from '@mui/icons-material/Search';

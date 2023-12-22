@@ -1,6 +1,12 @@
 import peopleModel from './peopleModel'; // Import the People model
 import asyncHandler from 'express-async-handler';
 import express from 'express';
+import {
+  getPeople,
+  getPeopleMovieCredits,
+  getPeopleList,
+  getPeopleImages,
+} from '../tmdb-api'
 
 const router = express.Router();
 
@@ -23,6 +29,30 @@ router.get('/', asyncHandler(async (req, res) => {
     results
   };
   res.status(200).json(returnObject);
+}));
+
+router.get('/tmdb/peopleList/:page', asyncHandler(async (req, res) => {
+  const page = parseInt(req.params.page);
+  const peopleList = await getPeopleList(page);
+  res.status(200).json(peopleList);
+}));
+
+router.get('/tmdb/:id', asyncHandler(async (req, res) => {
+  const id = parseInt(req.params.id);
+  const peopleDetail = await getPeople(id);
+  res.status(200).json(peopleDetail);
+}));
+
+router.get('/tmdb/:id/peopleMovieCredits', asyncHandler(async (req, res) => {
+  const id = parseInt(req.params.id);
+  const peopleMovieCredits = await getPeopleMovieCredits(id);
+  res.status(200).json(peopleMovieCredits);
+}));
+
+router.get('/tmdb/:id/peopleImages', asyncHandler(async (req, res) => {
+  const id = parseInt(req.params.id);
+  const peopleImages = await getPeopleImages(id);
+  res.status(200).json(peopleImages);
 }));
 
 export default router;

@@ -11,6 +11,8 @@ import authenticate from './authenticate';
 dotenv.config();
 
 const app = express();
+var swaggerInstall = require("../frontend/src/utils/swaggers");
+swaggerInstall(app);
 const port = process.env.PORT;
 
 app.use(cors());

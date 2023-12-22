@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { getPeopleList } from "../api/tmdb-api";
+import { getPeopleList } from "../api/people-api";
 import PageTemplate from '../components/templatePeopleListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
